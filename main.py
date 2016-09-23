@@ -328,4 +328,3 @@ app = webapp2.WSGIApplication([
 auth_paths = [
     '/blog/newpost'
 ]
-#>>>>>>> 6b36ae40ec70b99288934ddd2228d7ec2fccc300
