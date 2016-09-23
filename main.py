@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/usr/bin/env python
 #
 # Copyright 2007 Google Inc.
@@ -15,16 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import webapp2
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
-
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
-=======
 import webapp2, jinja2, os, re
 from google.appengine.ext import db
 from models import Post, User
@@ -47,8 +37,13 @@ class BlogHandler(webapp2.RequestHandler):
             The user parameter will be a User object.
         """
 
-####### TODO - filter the query so that only posts by the given user
-        return None
+####### TODO - filter the query so that there are only posts by the given user
+        my_posts = db.GqlQuery("SELECT * FROM Posts WHERE user = %s" % user, "ORDER BY created DESC")
+
+        posts.filter()
+
+        if my_posts:
+            return my_posts
 
     def get_user_by_name(self, username):
         """ Get a user object from the db, based on their username """
@@ -285,7 +280,8 @@ class SignupHandler(BlogHandler):
 
 class LoginHandler(BlogHandler):
 
-    # TODO - The login code here is mostly set up for you, but there isn't a template to log in
+##### TODO - The login code here is mostly set up for you, but there isn't a template to log in
+
 
     def render_login_form(self, error=""):
         """ Render the login form with or without an error, based on parameters """
@@ -332,4 +328,4 @@ app = webapp2.WSGIApplication([
 auth_paths = [
     '/blog/newpost'
 ]
->>>>>>> 6b36ae40ec70b99288934ddd2228d7ec2fccc300
+#>>>>>>> 6b36ae40ec70b99288934ddd2228d7ec2fccc300

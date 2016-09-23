@@ -1,4 +1,4 @@
-application: blogz
+application: blogz2
 version: 1
 runtime: python27
 api_version: 1
@@ -8,11 +8,6 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
-<<<<<<< HEAD
-=======
-- url: /css
-  static_dir: css
->>>>>>> 6b36ae40ec70b99288934ddd2228d7ec2fccc300
 
 - url: .*
   script: main.app
@@ -20,8 +15,5 @@ handlers:
 libraries:
 - name: webapp2
   version: "2.5.2"
-<<<<<<< HEAD
-=======
 - name: jinja2
   version: latest
->>>>>>> 6b36ae40ec70b99288934ddd2228d7ec2fccc300
