@@ -4,12 +4,21 @@
 
 <h1>blog posts!</h1>
 
+<p>Wanna see what your friends are writing?<br>
+Click on any author’s name <a href="/">here</a> to view a listing of all their previous
+posts.</p>
+
 {% for post in posts %}
 
 <h2><a href="/blog/{{ post.key().id() }}">{{ post.title }}</a></h2>
 <p>{{ post.body }}</p>
 <!-- TODO add author w/ link to author's blog page -->
-
+<p class="post-author">
+    written by <a href="/blog/{{ post.author.username }}">{{ post.author.username }}</a>
+</p>
+<p class="post-date">{{ post.date }}
+    written on {{ post.created.strftime('%Y-%m-%d') }}
+</p>
 {% endfor %}
 
 {% if username %}

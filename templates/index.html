@@ -5,9 +5,15 @@
 <h1>blog users!</h1>
 
 <ul>
+<p>Wanna see what your friends are writing?<br>
+Click on any author’s name below to view a listing of all their previous
+posts.</p>
 {% for user in users %}
 <li><a href="/blog/{{ user.username }}">{{ user.username }}</a></li>
 {% endfor %}
 </ul>
+
+<ul>
+
 
 {% endblock %}

@@ -38,12 +38,19 @@ class BlogHandler(webapp2.RequestHandler):
         """
 
 ####### TODO - filter the query so that there are only posts by the given user
-        my_posts = db.GqlQuery("SELECT * FROM Posts WHERE user = %s" % user, "ORDER BY created DESC")
+#       only use ORM syntax
+#        query = Post.all().order('-created').filter(author)
+#        return query.fetch(user=user, limit=limit, offset=offset)
 
-        posts.filter()
+        user_posts = Post.all().order('-created').filter("author", user)
+#        return user_posts
+        return user_posts.fetch(limit=limit, offset=offset)
 
-        if my_posts:
-            return my_posts
+#        my_posts = db.GqlQuery("SELECT * FROM Posts WHERE user = %s" % user, "ORDER BY created DESC")
+#        posts.filter(author)
+#       posts.filter(author, user.get_user_by_name)
+#        if my_posts:
+#            return my_posts
 
     def get_user_by_name(self, username):
         """ Get a user object from the db, based on their username """
@@ -136,6 +143,8 @@ class BlogIndexHandler(BlogHandler):
                     next_page=next_page,
                     username=username)
         self.response.out.write(response)
+#        self.response.out.write(posts)
+
 
 class NewPostHandler(BlogHandler):
 
@@ -282,7 +291,6 @@ class LoginHandler(BlogHandler):
 
 ##### TODO - The login code here is mostly set up for you, but there isn't a template to log in
 
-
     def render_login_form(self, error=""):
         """ Render the login form with or without an error, based on parameters """
         t = jinja_env.get_template("login.html")
@@ -311,11 +319,12 @@ class LogoutHandler(BlogHandler):
 
     def get(self):
         self.logout_user()
-        self.redirect('/blog')
+        self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/', IndexHandler),
     ('/blog', BlogIndexHandler),
+    ('/blog/', BlogIndexHandler),
     ('/blog/newpost', NewPostHandler),
     webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
     webapp2.Route('/blog/<username:[a-zA-Z0-9_-]{3,20}>', BlogIndexHandler),
